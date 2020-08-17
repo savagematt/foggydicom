@@ -5,11 +5,21 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://www.dcm4che.org/maven2/")
+    }
+    maven {
+        url = uri("https://github.com/nroduit/mvn-repo/raw/master")
+    }
 }
 
 javafx {
     version = "13"
     modules = [ 'javafx.controls' ]
+}
+
+dependencies {
+    compile "org.dcm4che.tool:dcm4che-tool-dcm2jpg:5.22.3"
 }
 
 mainClassName = 'HelloFX'
