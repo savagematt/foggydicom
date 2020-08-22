@@ -1,4 +1,4 @@
-package org.example.hellofx;
+package science.giraffe.foggydicom;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -16,16 +16,13 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class HelloFX extends Application {
+public class FoggyDicom extends Application {
 
     File input;
     File output;
 
     @Override
     public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-
         DirectoryChooser fileChooser = new DirectoryChooser();
         Label from = new Label(" ");
         Button fromButton = new Button("Read images from (folder or CD)");
@@ -35,7 +32,7 @@ public class HelloFX extends Application {
         });
 
         Label to = new Label(" ");
-        Button toButton = new Button("Save JPEGs to directory");
+        Button toButton = new Button("Save JPEGs to folder");
         toButton.setOnAction(e -> {
             output = fileChooser.showDialog(stage);
             if (output != null) to.setText(output.getAbsolutePath());

@@ -1,7 +1,7 @@
-package org.example.hellofx;
+package science.giraffe.foggydicom;
 
 public class Launcher {
     public static void main(String[] args) {
-        org.example.hellofx.HelloFX.main(args);
+        FoggyDicom.main(args);
     }
 }
