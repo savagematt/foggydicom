@@ -1,4 +1,4 @@
-package giraffe.science;
+package giraffe.science.foggydicom;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class Main extends Application {
+public class FoggyDicom extends Application {
 
     File input;
     File output;
@@ -33,7 +33,7 @@ public class Main extends Application {
         });
 
         Label to = new Label(" ");
-        Button toButton = new Button("Save to directory");
+        Button toButton = new Button("Save JPEGs to directory");
         toButton.setOnAction(e -> {
             output = fileChooser.showDialog(stage);
             if (output != null) to.setText(output.getAbsolutePath());
@@ -59,9 +59,10 @@ public class Main extends Application {
             goButton);
         box.setSpacing(10);
         box.setPadding(new Insets(10));
-        Scene scene = new Scene(box, 640, 480);
+        Scene scene = new Scene(box, 640, 250);
         stage.setScene(scene);
         stage.sizeToScene();
+        stage.setTitle("Easy DICOM -> JPEG");
         stage.show();
     }
 
