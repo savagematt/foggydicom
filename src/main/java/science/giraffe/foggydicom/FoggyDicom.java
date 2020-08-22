@@ -10,7 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.dcm4che3.tool.dcm2jpg.Dcm2Jpg;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -42,7 +41,9 @@ public class FoggyDicom extends Application {
         Button goButton = new Button("GO");
         goButton.setOnAction(e -> {
             try {
-                Dcm2Jpg.main(new String[]{input.getAbsolutePath(), output.getAbsolutePath()});
+                Dcm2Jpg.main(
+                    new File(input.getAbsolutePath()),
+                    new File(output.getAbsolutePath()));
             } catch (Exception ex) {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
