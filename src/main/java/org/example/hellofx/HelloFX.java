@@ -1,11 +1,13 @@
-package giraffe.science.foggydicom;
+package org.example.hellofx;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.dcm4che3.tool.dcm2jpg.Dcm2Jpg;
@@ -14,7 +16,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class FoggyDicom extends Application {
+public class HelloFX extends Application {
 
     File input;
     File output;
@@ -62,12 +64,10 @@ public class FoggyDicom extends Application {
         Scene scene = new Scene(box, 640, 250);
         stage.setScene(scene);
         stage.sizeToScene();
-        stage.setTitle("Easy DICOM -> JPEG");
+        stage.setTitle("Brainfog-proof DICOM");
         stage.show();
     }
-
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
-
 }
