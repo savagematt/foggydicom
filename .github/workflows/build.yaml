@@ -35,7 +35,7 @@ jobs:
           prerelease: false
       - name: Upload MacOS dmg
         if: ${{ matrix.os == 'macos' }}
-        id: upload-macos-release-asset
+        id: upload-dmg-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,10 +44,10 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/jpackage/FoggyDicom-1.${{ github.run_number }}.dmg
           asset_name: FoggyDicom-1.${{ github.run_number }}.dmg
-          asset_content_type: application/x-apple-diskimage
+          asset_content_type: application/octet-stream
       - name: Upload MacOS pkg
         if: ${{ matrix.os == 'macos' }}
-        id: upload-macos-release-asset
+        id: upload-pkg-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,10 +56,10 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/jpackage/FoggyDicom-1.${{ github.run_number }}.pkg
           asset_name: FoggyDicom-1.${{ github.run_number }}.pkg
-          asset_content_type: application/x-apple-diskimage
-      - name: Upload Windows Release Asset
+          asset_content_type: application/octet-stream
+      - name: Upload exe Release Asset
         if: ${{ matrix.os == 'windows' }}
-        id: upload-windows-release-asset
+        id: upload-exe-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,4 +68,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/jpackage/FoggyDicom-1.${{ github.run_number }}.exe
           asset_name: FoggyDicom-1.${{ github.run_number }}.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
+          asset_content_type: application/octet-stream
+      - name: Upload msi Release Asset
+        if: ${{ matrix.os == 'windows' }}
+        id: upload-msi-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/jpackage/FoggyDicom-1.${{ github.run_number }}.msi
+          asset_name: FoggyDicom-1.${{ github.run_number }}.msi
+          asset_content_type: application/octet-stream
