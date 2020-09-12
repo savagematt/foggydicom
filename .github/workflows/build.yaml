@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 14
       - name: Set version id
-        run: echo 1.${{ github.run_number }} > version.gradle
+        run: echo rootProject.version=1.${{ github.run_number }} >> settings.gradle
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
