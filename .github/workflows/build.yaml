@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 14
       - name: Set version id
-        run: echo 1.${{ github.run_number }} > version.gradle && cat version.gradle
+        run: echo 1.${{ github.run_number }} > version.gradle
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
@@ -27,8 +27,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release 1.${{ github.run_number }}
+          tag_name: 1.${{ github.run_number }}.${{ matrix.os }}
+          release_name: 1.${{ github.run_number }} ${{ matrix.os }}
           draft: false
           prerelease: false
       - name: Upload MacOS Release Asset
@@ -40,7 +40,7 @@ jobs:
         with:
           # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/FoggyDicom-${{ github.run_id }}.dmg
+          asset_path: ./build/FoggyDicom-1.${{ github.run_number }}.dmg
           asset_name: macos dmg
           asset_content_type: application/x-apple-diskimage
       - name: Upload Windows Release Asset
@@ -52,6 +52,6 @@ jobs:
         with:
           # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/FoggyDicom-${{ github.run_id }}.exe
+          asset_path: ./build/FoggyDicom-1.${{ github.run_number }}.exe
           asset_name: windows exe
           asset_content_type: application/vnd.microsoft.portable-executable
