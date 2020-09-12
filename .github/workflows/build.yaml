@@ -14,12 +14,12 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 14
+      - name: Set version id
+        run: echo ${{ github.run_id }} > version.gradle && cat version.gradle
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
-      - name: Set version id
-        run: echo ${{ github.run_id }} > version.gradle
-      - name: Wat
+      - name: Debug jpackage output
         run: ls ./build/jpackage
       - name: Create Release
         id: create_release
