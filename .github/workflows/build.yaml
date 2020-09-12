@@ -18,7 +18,7 @@ jobs:
         with:
           arguments: jpackage
       - name: Rename .dmg file
-        run: mv ./build/jpackage/FoggyDicom-1.0.dmg FoggyDicom.dmg
+        run: mv ./build/jpackage/FoggyDicom-1.0.dmg FoggyDicom.dmg || true
       - name: Wat
         run: ls ./build/jpackage
       - name: Create Release
