@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 14
       - name: Set version id
-        run: echo "rootProject.version=1.${{ github.run_number }}" >> settings.gradle
+        run: echo "version=1.${{ github.run_number }}" >> gradle.properties
       - name: Debug settings.gradle
         run: cat settings.gradle
       - uses: eskatos/gradle-command-action@v1
