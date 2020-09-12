@@ -4,7 +4,6 @@ plugins {
     id 'org.beryx.runtime' version '1.11.2'
 }
 
-
 repositories {
     mavenCentral()
     maven {
