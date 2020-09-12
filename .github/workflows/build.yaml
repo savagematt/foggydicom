@@ -17,10 +17,10 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
+      - name: Set version id
+        run: echo ${{ github.run_id }} > version.gradle
       - name: Wat
         run: ls ./build/jpackage
-      - name: Rename .dmg file
-        run: mv ./build/jpackage/FoggyDicom-1.0.dmg FoggyDicom.dmg || true
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -40,18 +40,18 @@ jobs:
         with:
           # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/FoggyDicom.dmg
+          asset_path: ./build/FoggyDicom-${{ github.run_id }}.dmg
           asset_name: macos dmg
           asset_content_type: application/x-apple-diskimage
-#      - name: Upload MacOS Release Asset
-#        if: ${{ matrix.os == "windows-latest" }}
-#        id: upload-macos-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: ./build/FoggyDicom.dmg
-#          asset_name: macos dmg
-#          asset_content_type: application/x-apple-diskimage
+      - name: Upload Windows Release Asset
+        if: ${{ matrix.os }} == "windows-latest"
+        id: upload-windows-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/FoggyDicom-${{ github.run_id }}.exe
+          asset_name: windows exe
+          asset_content_type: application/vnd.microsoft.portable-executable
