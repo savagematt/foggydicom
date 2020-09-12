@@ -1,4 +1,4 @@
-name: Deployment
+name: Release
 on:
   push:
     branches:
@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 14
       - name: Set version id
-        run: echo ${{ github.run_id }} > version.gradle && cat version.gradle
+        run: echo 1.${{ github.run_number }} > version.gradle && cat version.gradle
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
@@ -28,11 +28,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release 1.${{ github.run_number }}
           draft: false
           prerelease: false
       - name: Upload MacOS Release Asset
-        if: ${{ matrix.os }} == "macos-latest"
+        if: matrix.os == "macos-latest"
         id: upload-macos-release-asset
         uses: actions/upload-release-asset@v1
         env:
@@ -44,7 +44,7 @@ jobs:
           asset_name: macos dmg
           asset_content_type: application/x-apple-diskimage
       - name: Upload Windows Release Asset
-        if: ${{ matrix.os }} == "windows-latest"
+        if: matrix.os == "windows-latest"
         id: upload-windows-release-asset
         uses: actions/upload-release-asset@v1
         env:
