@@ -32,7 +32,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload MacOS Release Asset
-        if: matrix.os == "macos-latest"
+        if: ${{ matrix.os == 'macos-latest' }}
         id: upload-macos-release-asset
         uses: actions/upload-release-asset@v1
         env:
@@ -44,7 +44,7 @@ jobs:
           asset_name: macos dmg
           asset_content_type: application/x-apple-diskimage
       - name: Upload Windows Release Asset
-        if: matrix.os == "windows-latest"
+        if: ${{ matrix.os == 'windows-latest' }}
         id: upload-windows-release-asset
         uses: actions/upload-release-asset@v1
         env:
