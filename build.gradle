@@ -16,9 +16,15 @@ repositories {
     }
 }
 javafx {
-    modules = ['javafx.controls']
+    version = '14'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
 }
 
+jar {
+    from('src/main/resources') {
+        include  '**/*.*'
+    }
+}
 application {
     mainClassName = "science.giraffe.foggydicom.Launcher"
     applicationName = 'FoggyDicom'
@@ -26,6 +32,36 @@ application {
 
 dependencies {
     compile "org.dcm4che.tool:dcm4che-tool-dcm2jpg:5.22.3"
+
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+
+    compile 'javax.annotation:javax.annotation-api:1.3.2'
+    compile 'javax.inject:javax.inject:1'
+
+    // NOTE: the latest version _is_ 8.0.1!
+    // 8.0.7 was published by mistake
+    compile 'io.datafx:datafx:8.0.1'
+    compile 'io.datafx:flow:8.0.1'
+
+    // FontAwesome
+    // Versions higher than 2.x are for Java 11
+    compile 'org.kordamp.ikonli:ikonli-javafx:2.4.0'
+    compile 'org.kordamp.ikonli:ikonli-fontawesome5-pack:2.4.0'
+
+    compile fileTree(dir: 'gradle', include: '*.jar')
+}
+
+run{
+    jvmArgs = [
+            "--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED",
+            "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
+            "--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
+            "--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
+            "--illegal-access=warn",
+            "--add-opens=javafx.controls/javafx.scene.control.skin=com.jfoenix",
+            "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang.reflect=com.jfoenix"
+    ]
 }
 
 runtime {
