@@ -17,10 +17,10 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: jpackage
-      - name: Rename .dmg file
-        run: mv ./build/jpackage/FoggyDicom-1.0.dmg FoggyDicom.dmg || true
       - name: Wat
         run: ls ./build/jpackage
+      - name: Rename .dmg file
+        run: mv ./build/jpackage/FoggyDicom-1.0.dmg FoggyDicom.dmg || true
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
