@@ -12,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -60,6 +62,8 @@ public class SessionsController {
 
     @FXML
     private VBox image;
+    @FXML
+    private StackPane root;
     @FXML
     private ScrollPane thumbnails;
     @FXML
@@ -111,6 +115,27 @@ public class SessionsController {
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JPEG", "jpg", "jpeg"));
         fileChooser.setTitle("Export image as JPEG");
         thumbnails.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        image.setOnScroll(e -> {
+            if (e.getTextDeltaYUnits() == ScrollEvent.VerticalTextScrollUnits.LINES) {
+                slice.setValue(Math.max(0, Math.min(slice.getMax(), slice.getValue() + e.getTextDeltaY())));
+            } else {
+                double percent = e.getDeltaY() / slice.getHeight();
+                double delta = percent * slice.getMax();
+
+                System.out.println();
+                System.out.println(format("%s / %s = %s", e.getDeltaY(), slice.getHeight(), percent));
+                System.out.println(format("%s * %s = %s", percent, slice.getMax(), delta));
+
+                double v = delta > 0
+                    ? delta < 1 ? 1 : delta
+                    : delta > -1 ? -1 : delta;
+                System.out.println(delta);
+
+                double newValue = Math.max(0, Math.min(slice.getMax(), slice.getValue() - v));
+                System.out.println(format("from %s to %s", slice.getValue(), newValue));
+                slice.setValue(newValue);
+            }
+        });
 
         save.setOnAction(event -> {
             Series.Image image = this.series.get(selection.series).slices.get(selection.slice);
@@ -139,7 +164,7 @@ public class SessionsController {
                 .filter(Objects::nonNull)
                 .collect(Collectors.groupingBy(x -> x.seriesDescription));
 
-            if(bySeries.isEmpty())
+            if (bySeries.isEmpty())
                 return;
             this.series = bySeries
                 .entrySet()
@@ -199,7 +224,7 @@ public class SessionsController {
     private void select(Selection selection) {
         Series series = this.series.get(selection.series);
         slice.setMin(0);
-        slice.setMax(series.size()-1);
+        slice.setMax(series.size() - 1);
         slice.setValue(selection.slice);
         displayImage(series.slices.get(selection.slice));
         previous.setDisable(selection.slice <= 0);
